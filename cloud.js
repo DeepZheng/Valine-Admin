@@ -47,7 +47,7 @@ AV.Cloud.afterSave('Comment', function (req) {
 
 AV.Cloud.define('resend_mails', function(req) {
     let query = new AV.Query(Comment);
-    query.greaterThanOrEqualTo('createdAt', new Date(new Date().getTime() - 24*60*60*1000));
+    query.greaterThanOrEqualTo('createdAt', new Date(new Date().getTime() - 15*24*60*60*1000));
     query.notEqualTo('isNotified', true);
     // 如果你的评论量很大，可以适当调高数量限制，最高1000
     query.limit(200);
@@ -59,7 +59,7 @@ AV.Cloud.define('resend_mails', function(req) {
             }
             resolve(count);
         }).then((count)=>{
-            console.log(`昨日${count}条未成功发送的通知邮件处理完毕！`);
+            console.log(`十五天内${count}条未成功发送的通知邮件处理完毕！`);
         }).catch(()=>{
 
         });
